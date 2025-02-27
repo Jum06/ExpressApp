@@ -2,8 +2,8 @@ import swaggerAutogen from 'swagger-autogen';
 
 const doc = {
     info: {
-        title: 'My API',
-        description: 'Description'
+        title: 'Stockmanager API',
+        description: 'API for managing stock',
     },
     host: 'localhost:3000'
 };

@@ -2,18 +2,20 @@ import express from 'express';
 
 const router = express.Router();
 
-const pokemons = [
+const products = [
     {
         id: 1,
-        name: 'Bisasam',
-        type: [ 'plant' ],
-        moves: [ 'tackle', 'vine whip' ]
+        name: 'log',
+        price: 10,
+        stored: 100,
+        needed: 10
     },
     {
-        id: 25,
-        name: 'Pikachu',
-        type: [ 'electric' ],
-        moves: [ 'tackle', 'thunder' ]
+        id: 2,
+        name: 'alsoLogButMoreExpensive',
+        price: 1343,
+        stored: 10,
+        needed: 1000
     }
 ];
 router.use(express.json()); // body parser
@@ -24,7 +26,7 @@ router.get('/', (request, response) => {
     // #swagger.summary = "Some description"
     response
         .status(200)
-        .send(pokemons);
+        .send(products);
 });
 
 router.post('/:id', (request, response) => {
@@ -37,7 +39,7 @@ router.put('/', (request, response) => {
         console.log(`request from ${request.ip}`);
         response
             .status(200)
-            .send(pokemons.filter(p => p.id == request.query.id));
+            .send(products.filter(i => i.id === request.query.id));
     }
 
     response
@@ -46,16 +48,16 @@ router.put('/', (request, response) => {
 });
 
 router.get('/:id', (request, response) => {
-    const pokemon = pokemons.find(pokemon => pokemon.id === request.params.id);
+    const product = products.find(product => product.id === request.params.id);
 
-    if (pokemon === null) {
+    if (product === null) {
         response
             .status(404)
             .send(`id ${request.params.id} not found!`);
     } else {
         response
             .status(200)
-            .send(pokemon);
+            .send(product);
     }
 });
 

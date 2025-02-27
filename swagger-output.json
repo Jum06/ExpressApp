@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "My API",
-    "description": "Description",
+    "title": "Stockmanager API",
+    "description": "Stockmanager API",
     "version": "1.0.0"
   },
   "servers": [
@@ -21,7 +21,7 @@
         }
       }
     },
-    "/pokemons/": {
+    "/items/": {
       "get": {
         "summary": "Some description",
         "description": "",
@@ -40,7 +40,7 @@
         }
       }
     },
-    "/pokemons/{id}": {
+    "/items/{id}": {
       "post": {
         "description": "",
         "parameters": [
