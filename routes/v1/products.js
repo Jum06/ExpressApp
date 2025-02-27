@@ -1,63 +1,42 @@
 import express from 'express';
+import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../../services/productService.js';
 
 const router = express.Router();
 
-const products = [
-    {
-        id: 1,
-        name: 'log',
-        price: 10,
-        stored: 100,
-        needed: 10
-    },
-    {
-        id: 2,
-        name: 'alsoLogButMoreExpensive',
-        price: 1343,
-        stored: 10,
-        needed: 1000
-    }
-];
-router.use(express.json()); // body parser
-
-router.get('/', (request, response) => {
-    console.log(`request from ${request.ip}`);
-
-    // #swagger.summary = "Some description"
-    response
-        .status(200)
-        .send(products);
+router.get('/', async (req, res) => {
+    const products = await getProducts();
+    res.status(200).json(products);
 });
 
-router.post('/:id', (request, response) => {
-    console.log(`request from ${request.ip}`);
-});
-
-router.put('/', (request, response) => {
-
-    if(request.query.q !== undefined) {
-        console.log(`request from ${request.ip}`);
-        response
-            .status(200)
-            .send(products.filter(i => i.id === request.query.id));
-    }
-
-    response
-        .status(405)
-        .send('Not Allowed!');
-});
-
-router.get('/:id', (request, response) => {
-    const product = products.find(product => product.id === request.params.id);
-
-    if (product === null) {
-        response
-            .status(404)
-            .send(`id ${request.params.id} not found!`);
+router.get('/:id', async (req, res) => {
+    const product = await getProductById(req.params.id);
+    if (product) {
+        res.status(200).json(product);
     } else {
-        response
-            .status(200)
-            .send(product);
+        res.status(404).send('Product not found');
+    }
+});
+
+router.post('/', async (req, res) => {
+    const newProduct = await createProduct(req.body);
+    res.status(201).json(newProduct);
+});
+
+router.put('/:id', async (req, res) => {
+    const updatedProduct = await updateProduct(req.params.id, req.body);
+    if (updatedProduct) {
+        res.status(200).json(updatedProduct);
+    } else {
+        res.status(404).send('Product not found');
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    const deleted = await deleteProduct(req.params.id);
+    if (deleted) {
+        res.status(204).send();
+    } else {
+        res.status(404).send('Product not found');
     }
 });
 
