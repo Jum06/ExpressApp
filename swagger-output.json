@@ -23,8 +23,8 @@
     },
     "/products/": {
       "get": {
-        "summary": "Some description",
-        "description": "",
+        "summary": "Get all products",
+        "description": "Get a list of all products",
         "responses": {
           "200": {
             "description": "OK"

@@ -1,4 +1,5 @@
 import express from 'express';
+import usersRouter from './routes/v1/users.js';
 import productsRouter from './routes/v1/products.js';
 import categoriesRouter from './routes/v1/categories.js';
 
@@ -11,6 +12,7 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Stock Manager API');
 });
 
+app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/products', productsRouter);
 app.use('/api/v1/categories', categoriesRouter);
 
