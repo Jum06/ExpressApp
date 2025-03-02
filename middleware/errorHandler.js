@@ -1,6 +1,8 @@
 // middleware/errorHandler.js
+import logger from "../logger.js";
+
 const errorHandler = (err, req, res, next) => {
-    console.error(err.stack);
+    logger.error(err.stack);
 
     const statusCode = err.statusCode || 500;
     const response = {
