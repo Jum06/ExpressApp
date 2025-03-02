@@ -1,6 +1,8 @@
 import express from 'express';
 import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../../services/productService.js';
 import asyncHandler from '../../utils/asyncHandler.js';
+import validate from '../../middleware/validate.js';
+import { productSchema } from '../../schemas/productSchema.js';
 
 const router = express.Router();
 
@@ -18,12 +20,12 @@ router.get('/:id', asyncHandler(async (req, res) => {
     }
 }));
 
-router.post('/', asyncHandler(async (req, res) => {
+router.post('/', validate(productSchema), asyncHandler(async (req, res) => {
     const newProduct = await createProduct(req.body);
     res.status(201).json(newProduct);
 }));
 
-router.put('/:id', asyncHandler(async (req, res) => {
+router.put('/:id', validate(productSchema), asyncHandler(async (req, res) => {
     const updatedProduct = await updateProduct(req.params.id, req.body);
     if (updatedProduct) {
         res.status(200).json(updatedProduct);
@@ -35,7 +37,7 @@ router.put('/:id', asyncHandler(async (req, res) => {
 router.delete('/:id', asyncHandler(async (req, res) => {
     const deleted = await deleteProduct(req.params.id);
     if (deleted) {
-        res.status(204).send();
+        res.status(204).send('Product deleted');
     } else {
         res.status(404).send('Product not found');
     }

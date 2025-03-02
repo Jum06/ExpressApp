@@ -2,6 +2,8 @@
 import express from 'express';
 import { getUsers, getUserById, createUser, updateUser, deleteUser } from '../../services/userService.js';
 import asyncHandler from '../../utils/asyncHandler.js';
+import validate from '../../middleware/validate.js';
+import { userSchema } from '../../schemas/userSchema.js';
 
 const router = express.Router();
 
@@ -19,12 +21,12 @@ router.get('/:id', asyncHandler(async (req, res) => {
     }
 }));
 
-router.post('/', asyncHandler(async (req, res) => {
+router.post('/', validate(userSchema), asyncHandler(async (req, res) => {
     const newUser = await createUser(req.body);
     res.status(201).json(newUser);
 }));
 
-router.put('/:id', asyncHandler(async (req, res) => {
+router.put('/:id', validate(userSchema), asyncHandler(async (req, res) => {
     const updatedUser = await updateUser(req.params.id, req.body);
     if (updatedUser) {
         res.status(200).json(updatedUser);
