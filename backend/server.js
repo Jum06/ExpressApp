@@ -6,6 +6,7 @@ import categoriesRouter from './routes/v1/categories.js';
 import inventoryChangesRouter from './routes/v1/inventoryChanges.js';
 import errorHandler from './middleware/errorHandler.js';
 
+
 const app = express();
 const port = 3000;
 
