@@ -6,6 +6,9 @@ import categoriesRouter from './routes/v1/categories.js';
 import inventoryChangesRouter from './routes/v1/inventoryChanges.js';
 import errorHandler from './middleware/errorHandler.js';
 
+import { WebSocketServer } from 'ws';
+
+
 
 const app = express();
 const port = 3000;
@@ -30,4 +33,17 @@ app.use(errorHandler);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
+});
+
+
+const wss = new WebSocketServer({ port: 3001 });
+
+wss.on('connection', function connection(ws) {
+    ws.on('error', console.error);
+
+    ws.on('message', function message(data) {
+        console.log('received: %s', data);
+    });
+
+    ws.send('something');
 });
