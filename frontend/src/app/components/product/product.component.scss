@@ -1,0 +1,10 @@
+.product-container {
+  background-color: var(--secondary-bg);
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+  width: 15%;
+  border: 2px solid var(--accent-color);
+  border-radius: 8px;
+}

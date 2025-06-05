@@ -1,12 +1,22 @@
+h1 {
+  color: var(--accent-color);
+}
+
 .head {
-  background-color: #ffffff;
+  background-color: var(--secondary-bg);
   display: flex;
   height: 50px;
+  padding-left: 20px;
+  padding-right: 30px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .head__buttons-left {
   display: flex;
   width: 20%;
+  justify-content: left;
+  align-items: center;
 }
 
 .head__title {
@@ -14,10 +24,12 @@
   align-items: center;
   justify-content: center;
   width: 60%;
+
 }
 
 .head__buttons-right {
   display: flex;
   width: 20%;
-  justify-content: center;
+  justify-content: right;
+  align-items: center;
 }
