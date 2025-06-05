@@ -1,0 +1,23 @@
+.head {
+  background-color: #ffffff;
+  display: flex;
+  height: 50px;
+}
+
+.head__buttons-left {
+  display: flex;
+  width: 20%;
+}
+
+.head__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+}
+
+.head__buttons-right {
+  display: flex;
+  width: 20%;
+  justify-content: center;
+}
