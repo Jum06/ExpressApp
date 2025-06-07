@@ -2,21 +2,26 @@ h1 {
   color: var(--accent-color);
 }
 
-.head {
+#header {
   background-color: var(--secondary-bg);
   display: flex;
   height: 50px;
-  padding-left: 20px;
-  padding-right: 30px;
+
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-}
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1100;}
 
 .head__buttons-left {
   display: flex;
   width: 20%;
   justify-content: left;
   align-items: center;
+  padding-left: 10px;
 }
 
 .head__title {
@@ -32,4 +37,5 @@ h1 {
   width: 20%;
   justify-content: right;
   align-items: center;
+  padding-right: 10px;
 }

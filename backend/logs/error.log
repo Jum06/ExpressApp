@@ -9,3 +9,58 @@
     at Layer.handle [as handle_request] (C:\Users\emanu\Git\MEDT_StockManager\backend\node_modules\express\lib\router\layer.js:95:5)
     at C:\Users\emanu\Git\MEDT_StockManager\backend\node_modules\express\lib\router\index.js:284:15
     at Function.process_params (C:\Users\emanu\Git\MEDT_StockManager\backend\node_modules\express\lib\router\index.js:346:12)
+2025-06-05T17:19:39.897Z error: Error
+    at PromisePool.query (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at getCategories (file:///D:/Git/MEDT_HOEF_Stockmanager/backend/services/categoryService.js:4:31)
+    at file:///D:/Git/MEDT_HOEF_Stockmanager/backend/routes/v1/categories.js:12:30
+    at file:///D:/Git/MEDT_HOEF_Stockmanager/backend/utils/asyncHandler.js:3:21
+    at Layer.handle [as handle_request] (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\index.js:346:12)
+2025-06-05T17:19:50.304Z error: Error
+    at PromisePool.query (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at getProducts (file:///D:/Git/MEDT_HOEF_Stockmanager/backend/services/productService.js:4:31)
+    at file:///D:/Git/MEDT_HOEF_Stockmanager/backend/routes/v1/products.js:12:28
+    at file:///D:/Git/MEDT_HOEF_Stockmanager/backend/utils/asyncHandler.js:3:21
+    at Layer.handle [as handle_request] (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\index.js:346:12)
+2025-06-05T17:19:56.293Z error: Error
+    at PromisePool.query (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at getUsers (file:///D:/Git/MEDT_HOEF_Stockmanager/backend/services/userService.js:5:31)
+    at file:///D:/Git/MEDT_HOEF_Stockmanager/backend/routes/v1/users.js:12:25
+    at file:///D:/Git/MEDT_HOEF_Stockmanager/backend/utils/asyncHandler.js:3:21
+    at Layer.handle [as handle_request] (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\index.js:346:12)
+2025-06-05T17:42:45.875Z error: Error
+    at PromisePool.query (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at getUsers (file:///D:/Git/MEDT_HOEF_Stockmanager/backend/services/userService.js:5:31)
+    at file:///D:/Git/MEDT_HOEF_Stockmanager/backend/routes/v1/users.js:12:25
+    at file:///D:/Git/MEDT_HOEF_Stockmanager/backend/utils/asyncHandler.js:3:21
+    at Layer.handle [as handle_request] (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\index.js:346:12)
+2025-06-05T17:49:27.672Z error: Error
+    at PromisePool.query (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at getUsers (file:///D:/Git/MEDT_HOEF_Stockmanager/backend/services/userService.js:5:31)
+    at file:///D:/Git/MEDT_HOEF_Stockmanager/backend/routes/v1/users.js:12:25
+    at file:///D:/Git/MEDT_HOEF_Stockmanager/backend/utils/asyncHandler.js:3:21
+    at Layer.handle [as handle_request] (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (D:\Git\MEDT_HOEF_Stockmanager\backend\node_modules\express\lib\router\index.js:346:12)
