@@ -1,10 +1,9 @@
-<div class="product-container">
-  <div clss="product-image">
-<!--    <img [src]="product.imageUrl" alt="{{ product.name }}" />-->
-    placeholder
+<div class="product-container" *ngFor="let product of products">
+  <div class="product-image">
+    <img [src]="product.imageUrl" alt="{{ product.name }}" />
   </div>
   <div class="text">
-    <p>Stock: </p>
-    <p>Demand: </p>
+    <p>Stock: {{ product.stock }}</p>
+    <p>Demand: {{ product.demand }}</p>
   </div>
 </div>
