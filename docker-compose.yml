@@ -1,43 +1,35 @@
 services:
-
-#postgres db
-  db:
-    image: mysql:latest
-    container_name: stockmanager_db
-    restart: always
+  mysql:
+    image: mysql:8
+    container_name: mysql_stockmanager
     environment:
-      MYSQL_ROOT_PASSWORD="my-secret-pw
-      MYSQL_DATABASE=stockmanager
-      MYSQL_USER=stockmanager
-      MYSQL_PASSWORD=stockmanager
-    volumes:
-      - ./backend/:/docker-entrypoint-initdb.d:Z
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: stockmanager
+      MYSQL_USER: stockmanager
+      MYSQL_PASSWORD: stockmanager
     ports:
-      - "5432:5432"
+      - "53306:3306"
+    volumes:
+      - ./backend/mysql_init:/docker-entrypoint-initdb.d
+      - db-data:/var/lib/mysql
 
-  api:
-    image: node:22-slim
-    container_name: stockmanager_api
-    working_dir: /app
+  backend:
+    build: ./backend
+    container_name: backend_stockmanager
     ports:
       - "3000:3000"
     depends_on:
-      - db
-    volumes:
-      - ./backend:/app:z
-      - /app/node_modules
-    command: sh -c "npm install && npm start"
+      - mysql
+    env_file:
+      - ./backend/.env
 
-# frontend angular (dev)
   frontend:
-    image: node:22-slim
-    container_name: stockmanager_frontend
+    build: ./frontend
+    container_name: frontend_stockmanager
     ports:
-      - "4200:4200"
+      - "4200:80"
     depends_on:
-      - api
-    working_dir: /app
-    volumes:
-      - ./frontend:/app:Z
-      - /app/node_modules
-    command: sh -c "npm install && npm start"
+      - backend
+
+volumes:
+  db-data:
