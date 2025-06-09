@@ -2,9 +2,10 @@
   background-color: var(--secondary-bg);
   display: flex;
   flex-direction: column;
-  margin: 20px;
   padding: 20px;
-  width: 15%;
-  border: 2px solid var(--accent-color);
+  flex: 1 1 16.66%;
+  min-width: 200px;
+  border: 1px solid var(--accent-color);
   border-radius: 8px;
+  box-sizing: border-box;
 }

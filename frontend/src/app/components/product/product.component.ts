@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductService } from '../../services/product.service';
 
 interface Product {
   id: string;
@@ -17,14 +16,6 @@ interface Product {
   styleUrl: './product.component.scss',
   standalone: true
 })
-export class ProductComponent implements OnInit {
-  products: Product[] = [];
-
-  constructor(private productService: ProductService) {}
-
-  ngOnInit() {
-    this.productService.getProducts().subscribe(data => {
-      this.products = data;
-    });
-  }
+export class ProductComponent {
+  @Input() product!: Product;
 }
