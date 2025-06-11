@@ -1,4 +1,5 @@
 import pool from '../db.js';
+import { broadcastStockUpdate } from '../server.js';
 
 export const getProducts = async () => {
     const [rows] = await pool.query('SELECT * FROM products');
@@ -13,13 +14,18 @@ export const getProductById = async (id) => {
 export const createProduct = async (product) => {
     const { name, description, price, stock, demand, category_id } = product;
     const [result] = await pool.query('INSERT INTO products (name, description, price, stock, demand, category_id) VALUES (?, ?, ?, ?, ?, ?)', [name, description, price, stock, demand, category_id]);
+    broadcastStockUpdate(result.insertId, stock, demand);
     return { id: result.insertId, ...product };
 };
 
 export const updateProduct = async (id, product) => {
     const { name, description, price, stock, demand } = product;
     const [result] = await pool.query('UPDATE products SET name = ?, description = ?, price = ?, stock = ?, demand = ? WHERE id = ?', [name, description, price, stock, demand, id]);
-    return result.affectedRows > 0 ? { id, ...product } : null;
+    if (result.affectedRows > 0) {
+        broadcastStockUpdate(id, stock, demand);
+        return { id, ...product };
+    }
+    return null;
 };
 
 export const deleteProduct = async (id) => {

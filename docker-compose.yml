@@ -18,6 +18,7 @@ services:
     container_name: backend_stockmanager
     ports:
       - "3000:3000"
+      - "3001:3001"
     depends_on:
       - mysql
     env_file:

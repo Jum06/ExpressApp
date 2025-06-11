@@ -24,6 +24,18 @@
 2025-03-26T14:21:15.869Z info: Fetching all categories
 2025-03-26T14:22:30.629Z info: Fetching all users
 2025-04-09T06:45:42.296Z info: Fetching all users
+2025-06-05T17:45:41.346Z info: Fetching all categories
+2025-06-05T17:45:41.401Z error: Error
+    at PromisePool.query (C:\Users\emanu\Git\MEDT_StockManager\backend\node_modules\mysql2\lib\promise\pool.js:36:22)
+    at getCategories (file:///C:/Users/emanu/Git/MEDT_StockManager/backend/services/categoryService.js:4:31)
+    at file:///C:/Users/emanu/Git/MEDT_StockManager/backend/routes/v1/categories.js:12:30
+    at file:///C:/Users/emanu/Git/MEDT_StockManager/backend/utils/asyncHandler.js:3:21
+    at Layer.handle [as handle_request] (C:\Users\emanu\Git\MEDT_StockManager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\emanu\Git\MEDT_StockManager\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\emanu\Git\MEDT_StockManager\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\emanu\Git\MEDT_StockManager\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\emanu\Git\MEDT_StockManager\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\emanu\Git\MEDT_StockManager\backend\node_modules\express\lib\router\index.js:346:12)
 2025-06-05T07:05:25.785Z info: Fetching all users
 2025-06-05T12:49:36.637Z info: Fetching all users
 2025-06-05T17:19:39.877Z info: Fetching all categories

@@ -60,3 +60,16 @@ wss.on('connection', function connection(ws) {
 
     ws.send('something');
 });
+
+export function broadcastStockUpdate(productId, stock, demand) {
+    wss.clients.forEach(client => {
+        if (client.readyState === 1) { // 1 = OPEN
+            client.send(JSON.stringify({
+                type: 'stockUpdate',
+                productId,
+                stock,
+                demand
+            }));
+        }
+    });
+}
