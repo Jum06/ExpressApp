@@ -3,6 +3,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 
 export const routes: Routes = [
   { path: 'products', component: ProductListComponent },
+  { path: '', redirectTo: 'products', pathMatch: 'full' },
 
 ];
 

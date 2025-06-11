@@ -1,35 +1,21 @@
-import { Injectable, NgZone } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+// frontend/src/app/websocket.service.ts
+import { Injectable } from '@angular/core';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class WebsocketService {
-  private ws!: WebSocket;
-  private stockUpdates$ = new Subject<any>();
+@Injectable({ providedIn: 'root' })
+export class WebSocketService {
+  private socket$: WebSocketSubject<any>;
 
-  constructor(private ngZone: NgZone) {
-    this.connect();
+  constructor() {
+    this.socket$ = webSocket('ws://localhost:3000'); // Replace with your backend URL
   }
 
-  private connect() {
-    this.ws = new WebSocket('ws://localhost:3001');
-    this.ws.onmessage = (event) => {
-      this.ngZone.run(() => {
-        try {
-          const data = JSON.parse(event.data);
-          if (data.type === 'stockUpdate') {
-            this.stockUpdates$.next(data);
-          }
-        } catch {}
-      });
-    };
-    this.ws.onerror = (err) => {
-      // handle error if needed
-    };
+  getProductUpdates(): Observable<any> {
+    return this.socket$.asObservable();
   }
 
-  getStockUpdates(): Observable<any> {
-    return this.stockUpdates$.asObservable();
+  sendMessage(msg: any) {
+    this.socket$.next(msg);
   }
 }

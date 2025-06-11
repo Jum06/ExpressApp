@@ -5,13 +5,13 @@ import productsRouter from './routes/v1/products.js';
 import categoriesRouter from './routes/v1/categories.js';
 import inventoryChangesRouter from './routes/v1/inventoryChanges.js';
 import errorHandler from './middleware/errorHandler.js';
-
 import { WebSocketServer } from 'ws';
-
+import { getProducts, updateProduct } from './services/productService.js';
 
 
 const app = express();
 const port = 3000;
+
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -44,21 +44,33 @@ app.use('/api/v1/inventory-changes', inventoryChangesRouter);
 
 app.use(errorHandler);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
 
-const wss = new WebSocketServer({ port: 3001 });
+const wss = new WebSocketServer({ server });
 
-wss.on('connection', function connection(ws) {
+wss.on('connection', async (ws) => {
     ws.on('error', console.error);
 
-    ws.on('message', function message(data) {
-        console.log('received: %s', data);
-    });
+    // Send all products from DB on connection
+    const products = await getProducts();
+    ws.send(JSON.stringify(products));
 
-    ws.send('something');
+    ws.on('message', async (data) => {
+        // Expecting a product update as JSON
+        const update = JSON.parse(data);
+        const updatedProduct = await updateProduct(update.id, update);
+        if (updatedProduct) {
+            // Broadcast updated product to all clients
+            wss.clients.forEach(client => {
+                if (client.readyState === ws.OPEN) {
+                    client.send(JSON.stringify(updatedProduct));
+                }
+            });
+        }
+    });
 });
 
 export function broadcastStockUpdate(productId, stock, demand) {

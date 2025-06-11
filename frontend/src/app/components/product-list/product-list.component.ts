@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductComponent } from '../product/product.component';
 import { ProductService } from '../../services/product.service';
-import { WebsocketService } from '../../services/websocket.service';
+import { WebSocketService } from '../../services/websocket.service';
 
 interface Product {
   id: string;
@@ -24,7 +24,7 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private websocketService: WebsocketService
+    private websocketService: WebSocketService
   ) {}
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class ProductListComponent implements OnInit {
       this.products = data;
     });
 
-    this.websocketService.getStockUpdates().subscribe(update => {
+    this.websocketService.getProductUpdates().subscribe((update: any) => {
       const idx = this.products.findIndex(p => p.id == update.productId);
       if (idx !== -1) {
         this.products[idx].stock = update.stock;
