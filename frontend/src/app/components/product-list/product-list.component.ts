@@ -33,7 +33,7 @@ export class ProductListComponent implements OnInit {
     });
 
     this.websocketService.getProductUpdates().subscribe((update: any) => {
-      const idx = this.products.findIndex(p => p.id == update.productId);
+      const idx = this.products.findIndex(p => p.id == update.id);
       if (idx !== -1) {
         this.products[idx].stock = update.stock;
         this.products[idx].demand = update.demand;

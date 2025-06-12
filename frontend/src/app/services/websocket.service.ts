@@ -1,21 +1,22 @@
-// frontend/src/app/websocket.service.ts
 import { Injectable } from '@angular/core';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class WebSocketService {
-  private socket$: WebSocketSubject<any>;
+  private ws: WebSocket;
+  private productUpdates$ = new Subject<any>();
 
   constructor() {
-    this.socket$ = webSocket('ws://localhost:3000'); // Replace with your backend URL
+    this.ws = new WebSocket('ws://localhost:3001');
+    this.ws.onmessage = (event) => {
+      const msg = JSON.parse(event.data);
+      if (msg.type === 'PRODUCT_UPDATE') {
+        this.productUpdates$.next(msg.data);
+      }
+    };
   }
 
   getProductUpdates(): Observable<any> {
-    return this.socket$.asObservable();
-  }
-
-  sendMessage(msg: any) {
-    this.socket$.next(msg);
+    return this.productUpdates$.asObservable();
   }
 }

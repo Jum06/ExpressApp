@@ -1,5 +1,7 @@
+// backend/services/inventoryChangeService.js
 import pool from '../db.js';
-import { broadcastStockUpdate } from '../server.js';
+import { broadcastProductUpdate } from '../server.js';
+import {getProductById} from "./productService.js";
 
 export const getInventoryChanges = async () => {
     const [rows] = await pool.query('SELECT * FROM inventory_changes');
@@ -11,31 +13,29 @@ export const getInventoryChangeById = async (id) => {
     return rows[0];
 };
 
-export const createInventoryChange = async (inventoryChange) => {
-    const { product_id, user_id, type, change_amount, change_type, reason } = inventoryChange;
+export const createInventoryChange = async (change) => {
+    const { product_id, change_type, quantity, reason, changed_by, changed_at } = change;
     const [result] = await pool.query(
-        'INSERT INTO inventory_changes (product_id, user_id, type, change_amount, change_type, reason) VALUES (?, ?, ?, ?, ?, ?)',
-        [product_id, user_id, type, change_amount, change_type, reason]
+        'INSERT INTO inventory_changes (product_id, change_type, quantity, reason, changed_by, changed_at) VALUES (?, ?, ?, ?, ?, ?)',
+        [product_id, change_type, quantity, reason, changed_by, changed_at]
     );
-    const [productRows] = await pool.query('SELECT stock, demand FROM products WHERE id = ?', [product_id]);
-    if (productRows.length > 0) {
-        broadcastStockUpdate(product_id, productRows[0].stock, productRows[0].demand);
+
+    const product = await getProductById(product_id);
+    if (product) {
+        broadcastProductUpdate(product);
     }
-    return { id: result.insertId, ...inventoryChange };
+
+    return { id: result.insertId, ...change };
 };
 
-export const updateInventoryChange = async (id, inventoryChange) => {
-    const { product_id, user_id, type, change_amount, change_type, reason } = inventoryChange;
+export const updateInventoryChange = async (id, change) => {
+    const { product_id, change_type, quantity, reason, changed_by, changed_at } = change;
     const [result] = await pool.query(
-        'UPDATE inventory_changes SET product_id = ?, user_id = ?, type = ?, change_amount = ?, change_type = ?, reason = ? WHERE id = ?',
-        [product_id, user_id, type, change_amount, change_type, reason, id]
+        'UPDATE inventory_changes SET product_id = ?, change_type = ?, quantity = ?, reason = ?, changed_by = ?, changed_at = ? WHERE id = ?',
+        [product_id, change_type, quantity, reason, changed_by, changed_at, id]
     );
     if (result.affectedRows > 0) {
-        const [productRows] = await pool.query('SELECT stock, demand FROM products WHERE id = ?', [product_id]);
-        if (productRows.length > 0) {
-            broadcastStockUpdate(product_id, productRows[0].stock, productRows[0].demand);
-        }
-        return { id, ...inventoryChange };
+        return { id, ...change };
     }
     return null;
 };

@@ -5,8 +5,7 @@ import productsRouter from './routes/v1/products.js';
 import categoriesRouter from './routes/v1/categories.js';
 import inventoryChangesRouter from './routes/v1/inventoryChanges.js';
 import errorHandler from './middleware/errorHandler.js';
-import { WebSocketServer } from 'ws';
-import { getProducts, updateProduct } from './services/productService.js';
+import { WebSocketServer, WebSocket } from 'ws';
 
 
 const app = express();
@@ -48,40 +47,36 @@ const server = app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
+const wss = new WebSocketServer({ port: 3001 });
 
-const wss = new WebSocketServer({ server });
-
-wss.on('connection', async (ws) => {
-    ws.on('error', console.error);
-
-    // Send all products from DB on connection
-    const products = await getProducts();
-    ws.send(JSON.stringify(products));
-
-    ws.on('message', async (data) => {
-        // Expecting a product update as JSON
-        const update = JSON.parse(data);
-        const updatedProduct = await updateProduct(update.id, update);
-        if (updatedProduct) {
-            // Broadcast updated product to all clients
-            wss.clients.forEach(client => {
-                if (client.readyState === ws.OPEN) {
-                    client.send(JSON.stringify(updatedProduct));
-                }
-            });
+// server.js (add after wss definition)
+export function broadcastProductUpdate(product) {
+    console.log('Broadcast method called!');
+    const message = JSON.stringify({
+        type: 'PRODUCT_UPDATE',
+        data: {
+            id: product.id,
+            stock: product.stock,
+            demand: product.demand
         }
     });
-});
-
-export function broadcastStockUpdate(productId, stock, demand) {
     wss.clients.forEach(client => {
-        if (client.readyState === 1) { // 1 = OPEN
-            client.send(JSON.stringify({
-                type: 'stockUpdate',
-                productId,
-                stock,
-                demand
-            }));
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(message);
         }
     });
 }
+
+wss.on('connection', function connection(ws) {
+    ws.send('Welcome to the WebSocket server!');
+
+    ws.on('message', function incoming(message) {
+        wss.clients.forEach(function each(client) {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(`Echo: ${message}`);
+            }
+        });
+    });
+});
+
+console.log('WebSocket server running on ws://localhost:3001');
