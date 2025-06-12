@@ -1,6 +1,7 @@
 <div class="product-container">
   <div class="product-image">
-    <img [src]="product.imageUrl" alt="{{ product.name }}" />
+    <p id="name-text">{{product.name}}</p>
+    <img [src]="product.imageUrl" alt="" />
   </div>
   <div class="text">
     <p>Stock: {{ product.stock }}</p>

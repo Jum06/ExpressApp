@@ -10,7 +10,7 @@ import { getProducts, updateProduct } from './services/productService.js';
 
 
 const app = express();
-const port = 3000;
+const port = process.env.BACKEND_PORT || 3000;
 
 
 app.use((req, res, next) => {
