@@ -1,0 +1,36 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql_stockmanager
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: stockmanager
+      MYSQL_USER: stockmanager
+      MYSQL_PASSWORD: stockmanager
+    ports:
+      - "53306:3306"
+    volumes:
+      - ./backend/mysql_init:/docker-entrypoint-initdb.d
+      - db-data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    container_name: backend_stockmanager
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    depends_on:
+      - mysql
+    env_file:
+      - ./backend/.env
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_stockmanager
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  db-data:

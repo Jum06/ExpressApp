@@ -1,0 +1,12 @@
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: flex-start;
+  gap: 20px;
+  background-color: var(--primary-bg);
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 20px;
+}

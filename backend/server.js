@@ -5,13 +5,25 @@ import productsRouter from './routes/v1/products.js';
 import categoriesRouter from './routes/v1/categories.js';
 import inventoryChangesRouter from './routes/v1/inventoryChanges.js';
 import errorHandler from './middleware/errorHandler.js';
-
-import { WebSocketServer } from 'ws';
-
+import { WebSocketServer, WebSocket } from 'ws';
 
 
 const app = express();
-const port = 3000;
+const port = process.env.BACKEND_PORT || 3000;
+
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
+    next();
+});
 
 app.use(express.json());
 
@@ -31,19 +43,40 @@ app.use('/api/v1/inventory-changes', inventoryChangesRouter);
 
 app.use(errorHandler);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
-
 const wss = new WebSocketServer({ port: 3001 });
 
-wss.on('connection', function connection(ws) {
-    ws.on('error', console.error);
-
-    ws.on('message', function message(data) {
-        console.log('received: %s', data);
+// server.js (add after wss definition)
+export function broadcastProductUpdate(product) {
+    console.log('Broadcast method called!');
+    const message = JSON.stringify({
+        type: 'PRODUCT_UPDATE',
+        data: {
+            id: product.id,
+            stock: product.stock,
+            demand: product.demand
+        }
     });
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(message);
+        }
+    });
+}
 
-    ws.send('something');
+wss.on('connection', function connection(ws) {
+    ws.send('Welcome to the WebSocket server!');
+
+    ws.on('message', function incoming(message) {
+        wss.clients.forEach(function each(client) {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(`Echo: ${message}`);
+            }
+        });
+    });
 });
+
+console.log('WebSocket server running on ws://localhost:3001');
