@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProductComponent } from '../product/product.component';
 import { ProductService } from '../../services/product.service';
 import { WebSocketService } from '../../services/websocket.service';
+import { Router } from '@angular/router';
 
 interface Product {
   id: string;
@@ -24,8 +25,13 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private websocketService: WebSocketService
+    private websocketService: WebSocketService,
+    private router: Router
   ) {}
+
+  goToDetail(product: Product) {
+    this.router.navigate(['/products', product.id]);
+  }
 
   ngOnInit() {
     this.productService.getProducts().subscribe(data => {
