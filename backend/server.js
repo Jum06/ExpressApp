@@ -68,8 +68,7 @@ export function broadcastProductUpdate(product) {
 }
 
 wss.on('connection', function connection(ws) {
-    ws.send('Welcome to the WebSocket server!');
-
+    ws.send(JSON.stringify({ type: 'WELCOME', message: 'Welcome to the WebSocket server!' }));
     ws.on('message', function incoming(message) {
         wss.clients.forEach(function each(client) {
             if (client.readyState === WebSocket.OPEN) {
