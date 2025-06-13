@@ -17,3 +17,19 @@
   flex-direction: column;
   width: 100%;
 }
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+  &:hover {
+    background: var(--primary-bg);
+  }
+}
+.material-icons {
+  font-size: 2rem;
+  color: var(--accent-color, #1976d2);
+}

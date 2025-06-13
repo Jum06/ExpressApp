@@ -51,7 +51,6 @@ const wss = new WebSocketServer({ port: 3001 });
 
 // server.js (add after wss definition)
 export function broadcastProductUpdate(product) {
-    console.log('Broadcast method called!');
     const message = JSON.stringify({
         type: 'PRODUCT_UPDATE',
         data: {

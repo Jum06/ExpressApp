@@ -1,5 +1,6 @@
 <div id="sidebar">
-  <div class="sidebar__title">
-    <p>img</p>
-  </div>
+  <button (click)="openCreateDialog()">
+    <span class="material-icons">add</span>
+  </button>
+  <app-product-create *ngIf="showProductModal" (close)="closeProductModal()"></app-product-create>
 </div>

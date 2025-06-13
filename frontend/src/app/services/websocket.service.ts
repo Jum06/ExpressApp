@@ -9,9 +9,13 @@ export class WebSocketService {
   constructor() {
     this.ws = new WebSocket('ws://localhost:3001');
     this.ws.onmessage = (event) => {
-      const msg = JSON.parse(event.data);
-      if (msg.type === 'PRODUCT_UPDATE') {
-        this.productUpdates$.next(msg.data);
+      try {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'PRODUCT_UPDATE') {
+          this.productUpdates$.next(msg.data);
+        }
+      } catch (e) {
+        // Ignore non-JSON messages (like the welcome string)
       }
     };
   }

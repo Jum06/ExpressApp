@@ -1,0 +1,16 @@
+<div class="modal-backdrop" (click)="close.emit()"></div>
+<div class="modal">
+  <h2>Add Product</h2>
+  <form (ngSubmit)="submit()">
+    <input [(ngModel)]="name" name="name" placeholder="Name" required />
+    <input [(ngModel)]="description" name="description" placeholder="Description" />
+    Price:
+    <input [(ngModel)]="price" name="price" type="number" placeholder="Price" required />
+    Stock:
+    <input [(ngModel)]="stock" name="stock" type="number" placeholder="Stock" required />
+    Demand:
+    <input [(ngModel)]="demand" name="demand" type="number" placeholder="Demand" required />
+    <button type="submit">Add</button>
+    <button type="button" (click)="close.emit()">Cancel</button>
+  </form>
+</div>
