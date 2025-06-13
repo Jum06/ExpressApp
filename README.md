@@ -49,7 +49,7 @@ Es enthält viele Sicherheitsmaßnahmen wie Validierung, Authentifizierung und A
 
 ### 2. Frontend
 
-Das Frontend besteht momentan nur aus einer Produktübersicht. Man kann aktuell weder Produkte hinzufügen, bearbeiten noch löschen.
+Das Frontend besteht momentan nur aus einer Produktübersicht und Detail-Seite, auf die man kommt wenn man auf ein Produkt klickt. Man kann aktuell Produkte hinzufügen und löschen, das Bearbeiten funktioniert hingegen noch nicht.
 
 ### 3. Datenbank
 
