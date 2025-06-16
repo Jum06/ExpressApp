@@ -11,7 +11,7 @@
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: var(--accent-color); // Change to your desired hover color
+    background-color: color-mix(in srgb, var(--accent-color) 10%, var(--secondary-bg) 70%);
   }
 }
 

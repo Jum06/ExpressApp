@@ -1,83 +1,73 @@
-import {Component, OnInit} from '@angular/core';
-import {ProductService} from '../../services/product.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { EditFieldComponent } from '../edit-field/edit-field.component';
+import { FormsModule } from '@angular/forms';
 
-
-export interface Product {
-  id: string;
+interface Product {
+  id: number;
   name: string;
   description: string;
   price: number;
   stock: number;
   demand: number;
-  category?: { name: string };
+  category?: { id: number; name: string };
 }
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
-  standalone: true,
+  imports: [
+    EditFieldComponent,
+    FormsModule
+  ],
+  standalone: true
 })
-
 export class ProductDetailComponent implements OnInit {
-  product!: Product;
-  isEditing = false;
-  editedProduct!: Product;
-  isSaving = false;
-  error: string | null = null;
+  product?: Product;
+  private apiUrl = 'http://localhost:3000/api/v1/products';
 
   constructor(
-    private productService: ProductService,
-    private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.productService.getProduct(id).subscribe({
-        next: (data) => this.product = data,
-        error: () => this.error = 'Product not found'
+      this.http.get<Product>(`${this.apiUrl}/${id}`).subscribe(product => {
+        this.product = product;
       });
-    } else {
-      this.error = 'No product ID provided';
     }
+  }
+
+  updateField(field: keyof Product, value: any) {
+    if (!this.product) return;
+    const updated: any = {
+      name: this.product.name,
+      description: this.product.description,
+      price: this.product.price,
+      stock: this.product.stock,
+      demand: this.product.demand,
+      category_id: this.product.category?.id // include category_id if available
+    };
+    updated[field] = value;
+    this.http.put<Product>(`${this.apiUrl}/${this.product.id}`, updated)
+      .subscribe(product => {
+        this.product = product;
+      });
   }
 
   goBack() {
     this.router.navigate(['/products']);
   }
 
-  startEdit() {
-    this.isEditing = true;
-    this.editedProduct = { ...this.product };
-    this.error = null;
-  }
-
-  cancelEdit() {
-    this.isEditing = false;
-    this.error = null;
-  }
-
   deleteProduct() {
-    if (confirm('Are you sure you want to delete this product?')) {
-      this.productService.deleteProduct(this.product.id).subscribe(() => {
-        this.router.navigate(['/products']);
-      });
-    }
-  }
-
-  async saveEdit() {
-    this.isSaving = true;
-    this.error = null;
-    try {
-      this.product = await this.productService.updateProduct(this.editedProduct.id, this.editedProduct).toPromise();
-      this.isEditing = false;
-    } catch (err: any) {
-      this.error = err?.message || 'Failed to update product';
-    } finally {
-      this.isSaving = false;
-    }
+    if (!this.product) return;
+    this.http.delete(`${this.apiUrl}/${this.product.id}`).subscribe(() => {
+      this.router.navigate(['/products']);
+    });
   }
 }

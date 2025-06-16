@@ -1,0 +1,17 @@
+<div class="edit-field">
+  <div class="field-content">
+    <label>{{ label }}</label>
+    <span *ngIf="!editing">{{ value }}</span>
+    <input *ngIf="editing"
+           [type]="type"
+           [(ngModel)]="editValue"
+           [disabled]="disabled"
+           (keyup.enter)="save()"
+           (keyup.esc)="cancel()" />
+  </div>
+  <div class="field-actions">
+    <button *ngIf="!editing" (click)="startEdit()" [disabled]="disabled">Edit</button>
+    <button *ngIf="editing" (click)="save()">Save</button>
+    <button *ngIf="editing" (click)="cancel()">Cancel</button>
+  </div>
+</div>
