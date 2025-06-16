@@ -1,9 +1,28 @@
 <div class="product-detail-container">
   <h2 id="name-text">{{ product?.name }}</h2>
-  <p>{{ product?.description }}</p>
-  <div class="detail-row"><strong>Price:</strong> {{ product?.price }}</div>
-  <div class="detail-row"><strong>Stock:</strong> {{ product?.stock }}</div>
-  <div class="detail-row"><strong>Demand:</strong> {{ product?.demand }}</div>
+  <app-edit-field
+    [label]="'Description: '"
+    [value]="product?.description ?? ''"
+    (valueChange)="updateField('description', $event)">
+  </app-edit-field>
+  <app-edit-field
+    label="Price: "
+    [value]="product?.price ?? 0"
+    type="number: "
+    (valueChange)="updateField('price', $event)">
+  </app-edit-field>
+  <app-edit-field
+    label="Stock: "
+    [value]="product?.stock ?? 0"
+    type="number"
+    (valueChange)="updateField('stock', $event)">
+  </app-edit-field>
+  <app-edit-field
+    label="Demand: "
+    [value]="product?.demand ?? 0"
+    type="number"
+    (valueChange)="updateField('demand', $event)">
+  </app-edit-field>
   <div class="detail-row"><strong>Category:</strong> {{ product?.category?.name || 'Uncategorized' }}</div>
   <div class="actions">
     <button (click)="goBack()">Back</button>

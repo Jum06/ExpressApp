@@ -49,7 +49,7 @@ Es enthält viele Sicherheitsmaßnahmen wie Validierung, Authentifizierung und A
 
 ### 2. Frontend
 
-Das Frontend besteht momentan nur aus einer Produktübersicht und Detail-Seite, auf die man kommt wenn man auf ein Produkt klickt. Man kann aktuell Produkte hinzufügen und löschen, das Bearbeiten funktioniert hingegen noch nicht.
+Das Frontend besteht momentan nur aus einer Produktübersicht und Detail-Seite, auf die man kommt wenn man auf ein Produkt klickt. Man kann aktuell Produkte hinzufügen, löschen und bearbeiten. Durch die SCSS-Integration ist das umstellen von Themes sehr einfach. Im _variables.scss sind aktuell 2 Themes definiert: dark/light. Diese können in Minuten erweitert werden.
 
 ### 3. Datenbank
 

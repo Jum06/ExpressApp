@@ -1,0 +1,68 @@
+.edit-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  background: var(--primary-bg);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.field-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.field-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+label {
+  color: var(--accent-color);
+  font-weight: 600;
+  min-width: 110px;
+  margin-right: 0.5rem;
+}
+
+span {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.05rem;
+  color: var(--primary-text);
+}
+
+input {
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  padding: 0.4rem 0.7rem;
+  font-size: 1rem;
+  background: var(--secondary-bg);
+  color: var(--primary-text);
+  outline: none;
+  transition: border 0.2s;
+  &:focus {
+    border-color: #125ea2;
+  }
+}
+
+button {
+  padding: 0.3rem 0.9rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.98rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--accent-color);
+  color: #fff;
+  transition: background 0.2s;
+  margin-left: 0.3rem;
+  &:hover {
+    background: #125ea2;
+  }
+}
